@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app" style="color: pink;background-color: yellow;">
+        <div class="container">
+            hello world
+            <div class="student"> student {{students }}</div>
+            <span class="message">{{students}}{{message}}</span>
+            <span class="sm">[{{students}},{{message}}]</span>
+        </div>
+    </div>
+    <script src="./dist/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            // el: "#app",
+            data() {
+                return {
+                    message: "hello world",
+                    a: { b: "sub hello world" },
+                    students: [{ id: 1, name: "xiaoming" }, { id: 2, name: "xiaohong" }]
+                }
+            },
+        })
+        vm.$mount("#app")
+        // console.log(vm);
+    </script>
+</body>
+
+</html>
