@@ -115,7 +115,7 @@ function parseHTML(html) {
 export function compileToFunction(template) {
     // 获取语法树
     const ast = parseHTML(template)
-    
+
     // 语法树转字符串
     const code = generate(ast)
 
