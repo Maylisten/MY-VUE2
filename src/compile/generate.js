@@ -57,8 +57,7 @@ function gen(node) {
 
 export function generate(el) {
     const children = genChildren(el)
-
     //_c(div, { id: "app", style: { "color": " pink", "background-color": " yellow" } }, _c(div, { class: "container" }, _v("helloworld")))
-    const code = `_c("${el.tag}", ${el.attrs.length ? `{${genProps(el.attrs)}}` : "null"}, ${children ? children : null})`
+    const code = `_c("${el.tag}", ${el.attrs.length ? `{${genProps(el.attrs)}}` : undefined}, ${children ? children : ""})`
     return code;
 }

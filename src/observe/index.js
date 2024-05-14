@@ -1,4 +1,5 @@
 import { arrayMethods } from "./arr";
+import { Dep } from "./dep";
 
 export function observer(data) {
     if (typeof data !== 'object' || data === null) {
@@ -13,6 +14,7 @@ class Observer {
             enumerable: false,
             value: this
         })
+        this.dep = new Dep();
         if (Array.isArray(value)) {
             value.__proto__ = arrayMethods;
             this.observeArray(value);
@@ -39,18 +41,25 @@ class Observer {
 
 // 对对象中的属性进行劫持
 function defineReactive(obj, key, value) {
-    observer(value)
+    const childDep = observer(value)
+    const dep = new Dep();
     Object.defineProperty(obj, key, {
         get() {
+            if (Dep.target) {
+                dep.depend()
+                if (childDep.dep) {
+                    childDep.dep.depend();
+                }
+            }
             return value;
         },
         set(newValue) {
             if (newValue === value) {
                 return;
-            } else {
-                value = newValue;
-                observer(value);
             }
+            value = newValue;
+            observer(value);
+            dep.notify();
         }
     })
 }

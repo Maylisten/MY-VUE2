@@ -17,7 +17,7 @@ export default {
         serve({
             port: 3000,
             contentBase: "",
-            openPage: "./index.html",
+            openPage: "./diff.html",
             open: true,
         })
     ]

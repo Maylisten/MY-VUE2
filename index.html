@@ -8,29 +8,38 @@
 </head>
 
 <body>
+
     <div id="app" style="color: pink;background-color: yellow;">
-        <div class="container">
-            hello world
-            <div class="student"> student {{students }}</div>
-            <div class="student">{{message }} -- {{message}}</div>
-            <span class="message">{{students}}{{message}}</span>
-            <h1 class="sm">[{{students}},{{message}}]</h1>
-        </div>
+        <span> {{firstName}}</span>
+        <span> {{fullName}}</span>
     </div>
+
     <script src="./dist/vue.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script> -->
+
+
     <script>
         const vm = new Vue({
             // el: "#app",
             data() {
                 return {
-                    message: "hello world",
-                    a: { b: "sub hello world" },
-                    students: [{ id: 1, name: "xiaoming" }, { id: 2, name: "xiaohong" }]
+                    firstName: "xu",
+                    lastName: "han",
                 }
             },
+            computed: {
+                fullName() {
+                    return this.firstName + this.lastName;
+                }
+            }
+
         })
         vm.$mount("#app")
-        // console.log(vm);
+
+
+        setTimeout(() => {
+            vm.firstName = "xuuuu"
+        }, 2000)
     </script>
 </body>
 

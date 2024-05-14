@@ -7,50 +7,53 @@ const endTag = new RegExp(`^<\\/${qnameCapture}[^>]*>`)
 const attribute = /^\s*([^\s"'<>\/=]+)(?:\s*(=)\s*(?:"([^"]*)"+|'([^']*)'+|([^\s"'=<>`]+)))?/
 const startTagClose = /^\s*(\/?)>/
 
-let root;
-let currentElement;
-let stack = [];
-
-function start(tag, attrs) {
-    let element = createASTElement(tag, attrs)
-    if (!root) {
-        root = element;
-    }
-    currentElement = element;
-    stack.push(element)
-}
-
-function charts(text) {
-    text = text.replace(/\s+/g, " ")
-    if (text && text !== " ") {
-        currentElement.children.push({
-            type: 3,
-            text
-        })
-    }
-}
-
-function end() {
-    const element = stack.pop();
-    currentElement = stack.at(-1);
-    if (currentElement) {
-        element.parent = currentElement.tag;
-        currentElement.children.push(element);
-    }
-}
 
 
-function createASTElement(tag, attrs) {
-    return {
-        tag,
-        attrs,
-        children: [],
-        type: 1,
-        parent: null
-    }
-}
+
 
 function parseHTML(html) {
+    let root;
+    let currentElement;
+    let stack = [];
+    function start(tag, attrs) {
+        let element = createASTElement(tag, attrs)
+        if (!root) {
+            root = element;
+        }
+        currentElement = element;
+        stack.push(element)
+    }
+
+    function charts(text) {
+        text = text.replace(/\s+/g, " ")
+        if (text && text !== " ") {
+            currentElement.children.push({
+                type: 3,
+                text
+            })
+        }
+    }
+
+    function end() {
+        const element = stack.pop();
+        currentElement = stack.at(-1);
+        if (currentElement) {
+            element.parent = currentElement.tag;
+            currentElement.children.push(element);
+        }
+    }
+
+
+    function createASTElement(tag, attrs) {
+        return {
+            tag,
+            attrs,
+            children: [],
+            type: 1,
+            parent: null
+        }
+    }
+
     while (html) {
         const textEnd = html.indexOf("<")
         // 标签
